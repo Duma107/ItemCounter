@@ -1,0 +1,14 @@
+C:\Users\Dumisani.Nxumalo\ItemCounter\bin\Debug\net9.0\ItemCounter.exe
+C:\Users\Dumisani.Nxumalo\ItemCounter\bin\Debug\net9.0\ItemCounter.deps.json
+C:\Users\Dumisani.Nxumalo\ItemCounter\bin\Debug\net9.0\ItemCounter.runtimeconfig.json
+C:\Users\Dumisani.Nxumalo\ItemCounter\bin\Debug\net9.0\ItemCounter.dll
+C:\Users\Dumisani.Nxumalo\ItemCounter\bin\Debug\net9.0\ItemCounter.pdb
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\ItemCounter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\ItemCounter.AssemblyInfoInputs.cache
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\ItemCounter.AssemblyInfo.cs
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\ItemCounter.csproj.CoreCompileInputs.cache
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\ItemCounter.dll
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\refint\ItemCounter.dll
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\ItemCounter.pdb
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\ItemCounter.genruntimeconfig.cache
+C:\Users\Dumisani.Nxumalo\ItemCounter\obj\Debug\net9.0\ref\ItemCounter.dll
