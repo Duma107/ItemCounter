@@ -1,12 +1,80 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ItemCounterAPI;
 
 namespace ItemCounter
 {
     class Program
     {
         static void Main(string[] args)
+        {
+            // Check if we should run as web API or console app
+            if (args.Length > 0 && args[0] == "--api")
+            {
+                RunWebApi(args);
+            }
+            else
+            {
+                RunConsoleApp();
+            }
+        }
+
+        static void RunWebApi(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add services
+            builder.Services.AddControllers();
+            builder.Services.AddScoped<IItemCounterService, ItemCounterService>();
+
+            // Add Swagger/OpenAPI
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new() { 
+                    Title = "Item Counter API", 
+                    Version = "v1",
+                    Description = "API for counting occurrences of items across multiple data types",
+                    Contact = new() { Name = "Dumisani Nxumalo" }
+                });
+            });
+
+            // Add CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
+            var app = builder.Build();
+
+            // Configure pipeline
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseCors("AllowAll");
+            app.UseAuthorization();
+            app.MapControllers();
+
+            // Add a welcome endpoint
+            app.MapGet("/", () => new
+            {
+                Message = "Welcome to Item Counter API",
+                Author = "Dumisani Nxumalo",
+                Documentation = "/swagger",
+                Health = "/api/itemcounter/health"
+            });
+
+            app.Run();
+        }
+
+        static void RunConsoleApp()
         {
             while (true)
             {
@@ -17,10 +85,11 @@ namespace ItemCounter
                 Console.WriteLine("4. Count characters");
                 Console.WriteLine("5. Count booleans");
                 Console.WriteLine("6. Count dates");
-                Console.WriteLine("7. Exit");
-                Console.Write("Choose an option (1-7): ");
+                Console.WriteLine("7. Start Web API");
+                Console.WriteLine("8. Exit");
+                Console.Write("Choose an option (1-8): ");
                 
-                string choice = Console.ReadLine();
+                string? choice = Console.ReadLine();
                 
                 switch (choice)
                 {
@@ -43,6 +112,10 @@ namespace ItemCounter
                         CountDates();
                         break;
                     case "7":
+                        Console.WriteLine("Starting Web API... (This would normally start the web server)");
+                        Console.WriteLine("To run as Web API, restart with: dotnet run --api");
+                        break;
+                    case "8":
                         Console.WriteLine("Goodbye!");
                         return;
                     default:
@@ -55,7 +128,7 @@ namespace ItemCounter
         static void CountStrings()
         {
             Console.WriteLine("\nEnter words/strings separated by spaces:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -71,7 +144,7 @@ namespace ItemCounter
         static void CountIntegers()
         {
             Console.WriteLine("\nEnter integers separated by spaces:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -96,7 +169,7 @@ namespace ItemCounter
         static void CountDoubles()
         {
             Console.WriteLine("\nEnter decimal numbers separated by spaces:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -121,7 +194,7 @@ namespace ItemCounter
         static void CountBooleans()
         {
             Console.WriteLine("\nEnter boolean values separated by spaces (true/false, yes/no, 1/0):");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -147,7 +220,7 @@ namespace ItemCounter
         {
             Console.WriteLine("\nEnter dates separated by spaces (format: MM/dd/yyyy or yyyy-MM-dd):");
             Console.WriteLine("Example: 01/15/2024 2024-12-25 03/10/2023");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -183,7 +256,7 @@ namespace ItemCounter
         static void CountCharacters()
         {
             Console.WriteLine("\nEnter text (each character will be counted):");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
             
             if (string.IsNullOrEmpty(input))
             {
